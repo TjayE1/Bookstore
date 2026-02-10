@@ -1,0 +1,43 @@
+{"timestamp":"2026-01-26 23:33:40","event":"BOOKING_CREATED","ip":"127.0.0.1","user":"GUEST","details":{"booking_id":1,"booking_number":"BOOK-20260126233340-b6b5e5","customer_email":"re@gmail.com","booking_date":"2026-01-30"}}
+{"timestamp":"2026-01-28 19:33:39","event":"BOOKING_CREATED","ip":"127.0.0.1","user":"GUEST","details":{"booking_id":2,"booking_number":"BOOK-20260128193339-5e6419","customer_email":"nn@gmail.com","booking_date":"2026-01-29"}}
+{"timestamp":"2026-01-29 14:22:58","event":"BOOKING_CREATED","ip":"127.0.0.1","user":"GUEST","details":{"booking_id":3,"booking_number":"BOOK-20260129142258-c61125","customer_email":"estherpotorico@gmail.com","booking_date":"2026-01-30"}}
+{"timestamp":"2026-01-29 14:32:29","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:32:58","event":"BOOKING_CREATED","ip":"127.0.0.1","user":"GUEST","details":{"booking_id":4,"booking_number":"BOOK-20260129143258-39ef0b","customer_email":"estherpotorico@gmail.com","booking_date":"2026-02-11"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 14:33:20","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"estherpotorico@gmail.com"}}
+{"timestamp":"2026-01-29 16:24:10","event":"BOOKING_CREATED","ip":"127.0.0.1","user":"GUEST","details":{"booking_id":5,"booking_number":"BOOK-20260129162410-99ae91","customer_email":"yani@gmail.com","booking_date":"2026-02-05"}}
+{"timestamp":"2026-01-29 16:24:17","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"yani@gmail.com"}}
+{"timestamp":"2026-01-29 16:24:17","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"yani@gmail.com"}}
+{"timestamp":"2026-01-29 16:24:17","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"yani@gmail.com"}}
+{"timestamp":"2026-01-29 16:24:17","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"yani@gmail.com"}}
+{"timestamp":"2026-01-29 16:24:24","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"yani@gmail.com"}}
+{"timestamp":"2026-01-29 16:25:47","event":"BOOKING_CREATED","ip":"127.0.0.1","user":"GUEST","details":{"booking_id":6,"booking_number":"BOOK-20260129162547-eddf76","customer_email":"re@gmail.com","booking_date":"2026-02-06"}}
+{"timestamp":"2026-01-29 16:26:57","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 16:26:58","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"re@gmail.com"}}
+{"timestamp":"2026-01-29 18:29:17","event":"BOOKING_CREATED","ip":"127.0.0.1","user":"GUEST","details":{"booking_id":7,"booking_number":"BOOK-20260129182917-64ef61","customer_email":"vvvv@gmail.com","booking_date":"2026-02-06"}}
+{"timestamp":"2026-01-29 18:29:45","event":"BOOKING_ERROR","ip":"127.0.0.1","user":"GUEST","details":{"error":"This time slot is already booked","email":"vvvv@gmail.com"}}
+{"timestamp":"2026-01-29 18:58:49","event":"BOOKING_CREATED","ip":"127.0.0.1","user":"GUEST","details":{"booking_id":8,"booking_number":"BOOK-20260129185849-fcc2be","customer_email":"nn@gmail.com","booking_date":"2026-02-25"}}
+{"timestamp":"2026-01-30 09:30:45","event":"BOOKING_CREATED","ip":"127.0.0.1","user":"GUEST","details":{"booking_id":9,"booking_number":"BOOK-20260130093045-70c169","customer_email":"estherpotorico@gmail.com","booking_date":"2026-02-19"}}

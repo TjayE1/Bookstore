@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Products | Reader's Haven</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #F8F6F3 0%, #F5F1ED 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #7A9B8E 0%, #8BA994 100%);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #FFFFFF;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #E8F1F0;
+            font-size: 16px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #5B7C99;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .products-table {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #7A9B8E;
+            color: white;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        .stock-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .in-stock {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .out-of-stock {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .toggle-stock-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-enable {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-disable {
+            background: #dc3545;
+            color: white;
+        }
+
+        .toggle-stock-btn:hover {
+            opacity: 0.8;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #5B7C99;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            float: right;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <nav style="background: linear-gradient(135deg, #8b6f47 0%, #a0826d 100%); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-bottom: 20px;">
+        <div style="color: #d4af37; font-size: 18px; font-weight: bold;">📚 Reader's Haven</div>
+        <ul style="display: flex; gap: 10px; list-style: none; flex-wrap: wrap;">
+            <li><a href="shopping-cart.html" style="color: #f5e6d3; text-decoration: none; font-size: 13px; padding: 5px 8px;">Shop Books</a></li>
+            <li><a href="counselling.html" style="color: #f5e6d3; text-decoration: none; font-size: 13px; padding: 5px 8px;">Counselling</a></li>
+        </ul>
+        <ul style="display: flex; gap: 10px; list-style: none; flex-wrap: wrap;">
+            <li><a href="admin-bookings.html" style="color: #f5e6d3; text-decoration: none; font-size: 13px; padding: 5px 8px;">Admin - Bookings</a></li>
+            <li><a href="admin-orders.html" style="color: #f5e6d3; text-decoration: none; font-size: 13px; padding: 5px 8px;">Admin - Orders</a></li>
+            <li><a href="admin-products.html" style="color: #d4af37; text-decoration: none; font-size: 13px; padding: 5px 8px; border-bottom: 2px solid #d4af37;">Admin - Products</a></li>
+        </ul>
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+            <span style="background: #c1440e; color: white; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; white-space: nowrap;">🔐 Admin</span>
+            <button onclick="logout()" style="background: linear-gradient(135deg, #d4af37 0%, #c9a961 100%); color: #2c3e50; border: 2px solid #8b6f47; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px; white-space: nowrap;">Logout</button>
+        </div>
+    </nav>
+    <div class="container">
+        <header>
+            <h1> Product Management</h1>
+            <p class="subtitle">Manage inventory and stock availability</p>
+        </header>
+
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalProducts">-</div>
+                <div class="stat-label">Total Products</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="inStockCount">-</div>
+                <div class="stat-label">In Stock</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="outOfStockCount">-</div>
+                <div class="stat-label">Out of Stock</div>
+            </div>
+        </div>
+
+        <div class="products-table">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>All Products</h2>
+                <button onclick="showAddProductModal()" style="background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">+ Add Product</button>
+            </div>
+            <table id="productsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price (UGX)</th>
+                        <th>In Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="productsBody">
+                    <tr>
+                        <td colspan="6" class="loading">Loading products...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Check admin auth on page load with debugging
+        function checkAuth() {
+            const isAdmin = localStorage.getItem('isAdmin');
+            console.log('Auth check - isAdmin value:', isAdmin);
+            
+            if (isAdmin !== 'true') {
+                console.log('NOT AUTHENTICATED. Redirecting...');
+                alert('Unauthorized. Please login as admin.');
+                window.location.href = 'shopping-cart.html';
+                return false;
+            }
+            console.log('✅ Authenticated as admin');
+            return true;
+        }
+
+        // Run auth check after small delay to ensure localStorage is ready
+        setTimeout(checkAuth, 100);
+
+        let products = [];
+
+        async function loadProducts() {
+            try {
+                const response = await fetch('api/get-products.php');
+                const data = await response.json();
+                console.log('loadProducts API response:', data);
+                
+                if (data.success) {
+                    products = data.products;
+                    console.log('Products loaded:', products);
+                    renderProducts();
+                    updateStats();
+                } else {
+                    document.getElementById('productsBody').innerHTML = 
+                        '<tr><td colspan="6" style="text-align:center;color:red;">Failed to load products</td></tr>';
+                }
+            } catch (error) {
+                console.error('Error loading products:', error);
+                document.getElementById('productsBody').innerHTML = 
+                    '<tr><td colspan="6" style="text-align:center;color:red;">Error loading products</td></tr>';
+            }
+        }
+
+        function renderProducts() {
+            const tbody = document.getElementById('productsBody');
+            
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No products found</td></tr>';
+                return;
+            }
+
+            console.log('renderProducts - first product:', products[0]);
+            tbody.innerHTML = products.map(product => `
+                <tr>
+                    <td>${product.id}</td>
+                    <td>${product.name}</td>
+                    <td>${product.category || '-'}</td>
+                    <td class="price">UGX ${parseInt(product.price).toLocaleString()}</td>
+                    <td>
+                        <span class="stock-badge ${parseInt(product.quantity_in_stock) > 0 ? 'in-stock' : 'out-of-stock'}">
+                            ${parseInt(product.quantity_in_stock) > 0 ? '✓ ' + product.quantity_in_stock + ' In Stock' : '✗ Out of Stock'}
+                        </span>
+                    </td>
+                    <td>
+                        <button onclick="editQuantity(${product.id}, ${product.quantity_in_stock})" 
+                                style="background: #28a745; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 12px; margin-right: 5px;">
+                            Edit Qty
+                        </button>
+                        <button onclick="editProduct(${product.id})" style="background: #17a2b8; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 12px; margin-right: 5px;">Edit</button>
+                        <button onclick="deleteProduct(${product.id})" style="background: #dc3545; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 12px;">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateStats() {
+            const total = products.length;
+            // Sum of all quantity_in_stock values
+            const inStock = products.reduce((sum, p) => sum + parseInt(p.quantity_in_stock || 0), 0);
+            // Count of products with 0 quantity
+            const outOfStock = products.filter(p => parseInt(p.quantity_in_stock || 0) === 0).length;
+
+            document.getElementById('totalProducts').textContent = total;
+            document.getElementById('inStockCount').textContent = inStock;
+            document.getElementById('outOfStockCount').textContent = outOfStock;
+        }
+
+        async function toggleStock(productId, currentStatus) {
+            const newStatus = currentStatus ? 0 : 1;
+            
+            if (!confirm(`Are you sure you want to mark this product as ${newStatus ? 'IN STOCK' : 'OUT OF STOCK'}?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch('api/admin/update-product-stock.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        productId: productId, 
+                        inStock: newStatus 
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Reload products to update display immediately
+                    await loadProducts();
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error updating stock:', error);
+                alert('Failed to update stock status. Please try again.');
+            }
+        }
+
+        async function editQuantity(productId, currentQuantity) {
+            console.log('editQuantity called for product', productId, 'current qty:', currentQuantity);
+            
+            const newQuantity = prompt(`Enter new quantity for product ID ${productId}:\n\nCurrent: ${currentQuantity}`, currentQuantity);
+            
+            if (newQuantity === null) return; // User cancelled
+            
+            const quantity = parseInt(newQuantity);
+            if (isNaN(quantity) || quantity < 0) {
+                alert('Please enter a valid number (0 or greater)');
+                return;
+            }
+
+            try {
+                console.log('Sending quantity update:', { productId, quantity });
+                const response = await fetch('api/admin/update-product-quantity.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        productId: productId, 
+                        quantity: quantity 
+                    })
+                });
+
+                console.log('Response status:', response.status);
+                const result = await response.json();
+                console.log('API response:', result);
+                
+                if (result.success) {
+                    console.log('Success! Reloading products...');
+                    // Reload products to update display immediately
+                    await loadProducts();
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error updating quantity:', error);
+                alert('Failed to update quantity. Please try again.');
+            }
+        }
+
+        function showAddProductModal() {
+            const modal = document.createElement('div');
+            modal.id = 'addProductModal';
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 10000;';
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%;">
+                    <h2 style="margin-top: 0; color: #2c3e50;">Add New Product</h2>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Product Name *</label>
+                        <input type="text" id="productName" placeholder="e.g., Daily Planner" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Price (UGX) *</label>
+                        <input type="number" id="productPrice" placeholder="e.g., 85000" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Category</label>
+                        <input type="text" id="productCategory" placeholder="e.g., Journals" value="Journals" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Description</label>
+                        <textarea id="productDescription" placeholder="Brief product description..." rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;"></textarea>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Image URL (optional)</label>
+                        <input type="text" id="productImage" placeholder="e.g., image/grat.png" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Emoji (optional)</label>
+                        <input type="text" id="productEmoji" placeholder="e.g., 📔" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button onclick="submitAddProduct()" style="flex: 1; padding: 12px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Add Product</button>
+                        <button onclick="closeModal('addProductModal')" style="flex: 1; padding: 12px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Cancel</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        async function submitAddProduct() {
+            const name = document.getElementById('productName').value.trim();
+            const price = parseInt(document.getElementById('productPrice').value);
+            const category = document.getElementById('productCategory').value.trim();
+            const description = document.getElementById('productDescription').value.trim();
+            const imageUrl = document.getElementById('productImage').value.trim();
+            const emoji = document.getElementById('productEmoji').value.trim();
+            
+            if (!name) {
+                alert('Please enter product name');
+                return;
+            }
+            
+            if (!price || price <= 0) {
+                alert('Please enter a valid price');
+                return;
+            }
+            
+            try {
+                const response = await fetch('api/admin/add-product.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: name,
+                        price: price,
+                        category: category || 'Journals',
+                        description: description,
+                        imageUrl: imageUrl,
+                        emoji: emoji || '📔'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Product added successfully!');
+                    closeModal('addProductModal');
+                    loadProducts();
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error adding product:', error);
+                alert('Failed to add product. Please try again.');
+            }
+        }
+
+        function editProduct(productId) {
+            const product = products.find(p => parseInt(p.id) === parseInt(productId));
+            if (!product) {
+                alert('Product not found');
+                return;
+            }
+            
+            const modal = document.createElement('div');
+            modal.id = 'editProductModal';
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 10000;';
+            
+            modal.innerHTML = `
+                <div style="background: white; padding: 30px; border-radius: 10px; max-width: 500px; width: 90%;">
+                    <h2 style="margin-top: 0; color: #2c3e50;">Edit Product</h2>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Product Name</label>
+                        <input type="text" id="editProductName" value="${product.name}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Price (UGX)</label>
+                        <input type="number" id="editProductPrice" value="${product.price}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Category</label>
+                        <input type="text" id="editProductCategory" value="${product.category || 'Journals'}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Description</label>
+                        <textarea id="editProductDescription" rows="3" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">${product.description || ''}</textarea>
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Image URL (optional)</label>
+                        <input type="text" id="editProductImage" value="${product.image_url || product.image || ''}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+                    </div>
+
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">Emoji (optional)</label>
+                        <input type="text" id="editProductEmoji" value="${product.emoji || '📔'}" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold;">
+                            <input type="checkbox" id="editProductStock" ${product.in_stock ? 'checked' : ''}>
+                            In Stock
+                        </label>
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button onclick="submitEditProduct(${productId})" style="flex: 1; padding: 12px; background: #17a2b8; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Save Changes</button>
+                        <button onclick="closeModal('editProductModal')" style="flex: 1; padding: 12px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Cancel</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        async function submitEditProduct(productId) {
+            const name = document.getElementById('editProductName').value.trim();
+            const price = parseInt(document.getElementById('editProductPrice').value);
+            const category = document.getElementById('editProductCategory').value.trim();
+            const description = document.getElementById('editProductDescription').value.trim();
+            const inStock = document.getElementById('editProductStock').checked ? 1 : 0;
+            const imageUrl = document.getElementById('editProductImage').value.trim();
+            const emoji = document.getElementById('editProductEmoji').value.trim();
+            
+            if (!name) {
+                alert('Please enter product name');
+                return;
+            }
+            
+            if (!price || price <= 0) {
+                alert('Please enter a valid price');
+                return;
+            }
+            
+            try {
+                const response = await fetch('api/admin/update-product.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        productId: productId,
+                        name: name,
+                        price: price,
+                        category: category,
+                        description: description,
+                        inStock: inStock,
+                        imageUrl: imageUrl,
+                        emoji: emoji || '📔'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Product updated successfully!');
+                    closeModal('editProductModal');
+                    loadProducts();
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error updating product:', error);
+                alert('Failed to update product. Please try again.');
+            }
+        }
+
+        async function deleteProduct(productId) {
+            if (!confirm('Are you sure you want to delete this product?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('api/admin/delete-product.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ productId: productId })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Product deleted successfully!');
+                    loadProducts();
+                } else {
+                    alert('Error: ' + result.message);
+                }
+            } catch (error) {
+                console.error('Error deleting product:', error);
+                alert('Failed to delete product. Please try again.');
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.remove();
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('isAdminLoggedIn');
+            window.location.href = 'shopping-cart.html';
+        }
+
+        // Load products on page load
+        loadProducts();
+    </script>
+</body>
+</html>

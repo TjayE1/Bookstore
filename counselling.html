@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counselling Support</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Garamond', serif;
+            background: linear-gradient(135deg, #F8F6F3 0%, #F5F1ED 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2C2C2C;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: linear-gradient(135deg, #7A9B8E 0%, #8BA994 100%);
+            padding: 20px 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-left: 6px solid #5B7C99;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            color: #FFFFFF;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+
+        .nav-links a:hover {
+            color: #E8F1F0;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-links a.active {
+            color: #FFE5CC;
+            border-bottom: 2px solid #FFE5CC;
+        }
+
+        .nav-admin-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-admin-links a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 3px;
+        }
+
+        .nav-admin-links a:hover {
+            color: #E8F1F0;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .login-btn, .logout-btn {
+            background: linear-gradient(135deg, #5B7C99 0%, #6B8CAB 100%);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid #3D5F7A;
+            font-size: 14px;
+        }
+
+        .login-btn:hover, .logout-btn:hover {
+            background: linear-gradient(135deg, #6B8CAB 0%, #7B9CBB 100%);
+            transform: scale(1.05);
+        }
+
+        .admin-badge {
+            background: #6B8CAB;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-modal.active {
+            display: flex;
+        }
+
+        .login-content {
+            background: #F8F6F3;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 10px;
+            padding: 40px;
+            position: relative;
+            border: 3px solid #7A9B8E;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .close-login {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #7A9B8E;
+            transition: color 0.3s ease;
+        }
+
+        .close-login:hover {
+            color: #5B7C99;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2C2C2C;
+            margin-bottom: 10px;
+            text-align: center;
+            font-family: 'Georgia', serif;
+        }
+
+        .login-subtitle {
+            font-size: 14px;
+            color: #5F5F5F;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-form-group {
+            margin-bottom: 20px;
+        }
+
+        .login-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2C2C2C;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #D4D4D4;
+            border-radius: 5px;
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+            color: #2C2C2C;
+            background: #fff;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #7A9B8E;
+            box-shadow: 0 0 5px rgba(122, 155, 142, 0.3);
+        }
+
+        .login-submit {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #5B7C99 0%, #6B8CAB 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .login-submit:hover {
+            background: linear-gradient(135deg, #6B8CAB 0%, #7B9CBB 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(91, 124, 153, 0.3);
+        }
+
+        .login-error {
+            color: #C85A5A;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        .login-hint {
+            background: rgba(122, 155, 142, 0.08);
+            border: 1px solid #D4D4D4;
+            padding: 12px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #5F5F5F;
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #7A9B8E 0%, #8BA994 100%);
+            color: #FFFFFF;
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+            border-top: 3px solid #5B7C99;
+            font-size: 14px;
+        }
+
+        footer p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .booking-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .booking-modal.active {
+            display: flex;
+        }
+
+        .booking-content {
+            background: linear-gradient(135deg, #F8F6F3 0%, #F5F1ED 100%);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            border-radius: 10px;
+            padding: 40px;
+            position: relative;
+            border: 3px solid #7A9B8E;
+            overflow-y: auto;
+        }
+
+        .close-booking {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #7A9B8E;
+            transition: color 0.3s ease;
+        }
+
+        .close-booking:hover {
+            color: #5B7C99;
+        }
+
+        .booking-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2C2C2C;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .booking-subtitle {
+            font-size: 14px;
+            color: #5F5F5F;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2C2C2C;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #D4D4D4;
+            border-radius: 5px;
+            font-family: 'Georgia', serif;
+            font-size: 14px;
+            color: #2C2C2C;
+            background: #fff;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #7A9B8E;
+            box-shadow: 0 0 5px rgba(122, 155, 142, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-booking-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #5B7C99 0%, #6B8CAB 100%);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .submit-booking-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(91, 124, 153, 0.3);
+        }
+
+        .counselling-section {
+            background: linear-gradient(135deg, #F8F6F3 0%, #F5F1ED 100%);
+            border-radius: 10px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-left: 8px solid #7A9B8E;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .counselling-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .counselling-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .counselling-title {
+            font-size: 36px;
+            color: #2C2C2C;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .counselling-subtitle {
+            font-size: 16px;
+            color: #5F5F5F;
+            line-height: 1.8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .counselling-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .counselling-info {
+            background: rgba(245, 241, 237, 0.8);
+            padding: 25px;
+            border-radius: 8px;
+            border: 2px solid #D4D4D4;
+        }
+
+        .info-heading {
+            font-size: 20px;
+            color: #2C2C2C;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-list li {
+            margin-bottom: 12px;
+            color: #5F5F5F;
+            font-size: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .info-icon {
+            color: #7A9B8E;
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .reach-out-card {
+            background: linear-gradient(135deg, #7A9B8E 0%, #8BA994 100%);
+            color: #FFFFFF;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .reach-out-card .info-heading {
+            color: #FFFFFF;
+            font-size: 22px;
+        }
+
+        .reach-out-text {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .reach-out-btn {
+            background: #F8F6F3;
+            color: #7A9B8E;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            margin-top: 15px;
+        }
+
+        .reach-out-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .confidential-note {
+            background: rgba(122, 155, 142, 0.08);
+            border: 2px solid #D4D4D4;
+            padding: 20px;
+            border-radius: 8px;
+            color: #2C2C2C;
+            font-size: 15px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .counselling-content {
+                grid-template-columns: 1fr;
+            }
+
+            .counselling-title {
+                font-size: 28px;
+            }
+
+            .counselling-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-brand"> Reader's Haven</div>
+            <div class="nav-center">
+                <ul class="nav-links">
+                    <li><a href="shopping-cart.html">Shop Books</a></li>
+                    <li><a href="counselling.html" class="active">Counselling Support</a></li>
+                </ul>
+                <ul class="nav-admin-links" id="adminLinks" style="display: none;">
+                    <li><a href="admin-bookings.html" target="_blank">Admin - Bookings</a></li>
+                    <li><a href="admin-orders.html" target="_blank">Admin - Orders</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <span class="admin-badge" id="adminBadge" style="display: none;"> Admin</span>
+                <button class="login-btn" id="loginBtn" onclick="openLoginModal()">Login</button>
+                <button class="logout-btn" id="logoutBtn" onclick="logout()" style="display: none;">Logout</button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Counselling Support Section -->
+    <div class="container">
+        <div class="counselling-section">
+            <div class="counselling-header">
+                <div class="counselling-icon">🤝</div>
+                <h2 class="counselling-title">You Don't Have to Go Through This Alone</h2>
+                <p class="counselling-subtitle">Sometimes life feels overwhelming. If you're struggling, confused, or just need someone to talk to—we're here to support you with compassionate, professional counselling.</p>
+            </div>
+            
+            <div class="counselling-content">
+                <div class="counselling-info">
+                    <h3 class="info-heading">💙 What We Offer</h3>
+                    <ul class="info-list">
+                        <li><span class="info-icon">✓</span> <span>Safe, confidential one-on-one sessions with certified counsellors</span></li>
+                        <li><span class="info-icon">✓</span> <span>Non-judgmental support tailored to your unique situation</span></li>
+                        <li><span class="info-icon">✓</span> <span>Flexible scheduling that works with your life</span></li>
+                        <li><span class="info-icon">✓</span> <span>Support for anxiety, stress, relationships, life transitions, and more</span></li>
+                        <li><span class="info-icon">✓</span> <span>Evidence-based approaches to help you feel better</span></li>
+                        <li><span class="info-icon">✓</span> <span>Ongoing care and follow-up support</span></li>
+                    </ul>
+                </div>
+                
+                <div class="reach-out-card">
+                    <h3 class="info-heading">🌟 Ready to Take the First Step?</h3>
+                    <p class="reach-out-text">Reaching out for help is a sign of strength, not weakness. Our compassionate counsellors are ready to listen, understand, and support you on your journey to feeling better.</p>
+                    <p class="reach-out-text" style="font-size: 15px; color: #fff;"><strong>Sessions: UGX40,000</strong> — Invest in your wellbeing</p>
+                    <button class="reach-out-btn" onclick="openBookingForm()">Reach Out for Support</button>
+                </div>
+            </div>
+            
+            <div class="confidential-note">
+                🔒 <strong>Your Privacy Matters:</strong> All information shared is completely confidential and protected. We create a safe space where you can speak freely without judgment.
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="booking-modal" id="bookingModal">
+        <div class="booking-content">
+            <span class="close-booking" onclick="closeBookingForm()">&times;</span>
+            <h2 class="booking-title">Book Your Counselling Session</h2>
+            <p class="booking-subtitle">We're here to listen and support you. Let's find a time that works for you.</p>
+            
+            <form onsubmit="submitBooking(event)">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone">
+                </div>
+
+                <div class="form-group">
+                    <label for="bookingDate">Preferred Date *</label>
+                    <input type="date" id="bookingDate" required onchange="updateAvailableTimeSlots()">
+                </div>
+
+                <div class="form-group">
+                    <label for="bookingTime">Preferred Time *</label>
+                    <select id="bookingTime" required>
+                        <option value="">-- Select a time --</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="concern">Brief note (optional)</label>
+                    <textarea id="concern" placeholder="You may share a short message if you want, or we can talk during the session."></textarea>
+                </div>
+
+                <div style="background-color: #E8F4F1; padding: 15px; border-radius: 8px; border-left: 4px solid #7A9B8E; margin: 20px 0; font-size: 13px; color: #2C2C2C; line-height: 1.6;">
+                    <strong> Your Privacy & Safety:</strong><br>
+                    Your information is private and confidential. You don't have to share anything you're not comfortable sharing. Everything discussed here stays between you and your counselor.
+                </div>
+
+                <button type="submit" class="submit-booking-btn">Confirm My Session</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-content">
+            <span class="close-login" onclick="closeLoginModal()">&times;</span>
+            <h2 class="login-title">Admin Login</h2>
+            <p class="login-subtitle">Enter your credentials to access admin features</p>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="login-form-group">
+                    <label class="login-label">Username</label>
+                    <input type="text" class="login-input" id="loginUsername" placeholder="admin" required>
+                </div>
+
+                <div class="login-form-group">
+                    <label class="login-label">Password</label>
+                    <input type="password" class="login-input" id="loginPassword" placeholder="password" required>
+                </div>
+
+                <div class="login-error" id="loginError">Invalid username or password</div>
+
+                <button type="submit" class="login-submit">Login</button>
+            </form>
+
+            <div class="login-hint">
+                Demo Credentials:<br>
+                Username: <strong>admin</strong><br>
+                Password: <strong>admin123</strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Authentication state
+        function checkAdminStatus() {
+            const isAdmin = localStorage.getItem('isAdmin') === 'true';
+            const loginBtn = document.getElementById('loginBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const adminLinks = document.getElementById('adminLinks');
+            const adminBadge = document.getElementById('adminBadge');
+
+            if (isAdmin) {
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                adminLinks.style.display = 'flex';
+                adminBadge.style.display = 'block';
+            } else {
+                loginBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                adminLinks.style.display = 'none';
+                adminBadge.style.display = 'none';
+            }
+        }
+
+        function openLoginModal() {
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('active');
+            document.getElementById('loginError').classList.remove('show');
+            document.getElementById('loginForm').reset();
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorDiv = document.getElementById('loginError');
+
+            // Default credentials
+            if (username === 'admin' && password === 'admin123') {
+                localStorage.setItem('isAdmin', 'true');
+                closeLoginModal();
+                checkAdminStatus();
+            } else {
+                errorDiv.classList.add('show');
+            }
+        }
+
+        function logout() {
+            localStorage.setItem('isAdmin', 'false');
+            checkAdminStatus();
+        }
+
+        // Check admin status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminStatus();
+        });
+
+        // Close login modal when clicking outside
+        document.getElementById('loginModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeLoginModal();
+            }
+        });
+
+        // Availability is now fetched from the server
+        let bookedAppointments = [];
+        let unavailableDates = [];
+
+        const availableTimeSlots = [
+            { value: '09:00', label: '9:00 AM' },
+            { value: '10:00', label: '10:00 AM' },
+            { value: '11:00', label: '11:00 AM' },
+            { value: '13:00', label: '1:00 PM' },
+            { value: '14:00', label: '2:00 PM' },
+            { value: '15:00', label: '3:00 PM' },
+            { value: '16:00', label: '4:00 PM' }
+        ];
+
+        function openBookingForm() {
+            document.getElementById('bookingModal').classList.add('active');
+        }
+
+        function closeBookingForm() {
+            document.getElementById('bookingModal').classList.remove('active');
+        }
+
+        function isDateAvailable(dateString) {
+            const date = new Date(dateString);
+            const dayOfWeek = date.getDay();
+            
+            // Check if it's a weekend (0 = Sunday, 6 = Saturday)
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+                return false;
+            }
+            
+            // Check if date is in unavailable dates
+            for (let unavailable of unavailableDates) {
+                if (unavailable.date === dateString) {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        function countBookingsForDate(dateString) {
+            return bookedAppointments.filter(apt => apt.date === dateString).length;
+        }
+
+        function isTimeSlotAvailable(dateString, time) {
+            return !bookedAppointments.some(apt => apt.date === dateString && apt.time === time);
+        }
+
+        async function updateAvailableTimeSlots() {
+            const dateInput = document.getElementById('bookingDate').value;
+            const timeSelect = document.getElementById('bookingTime');
+
+            timeSelect.innerHTML = '<option value="">-- Select a time --</option>';
+
+            if (!dateInput) return;
+
+            try {
+                const response = await fetch(`api/get-available-slots.php?date=${encodeURIComponent(dateInput)}`);
+                const data = await response.json();
+
+                if (!data.success || !Array.isArray(data.available_slots) || data.available_slots.length === 0) {
+                    timeSelect.innerHTML = '<option value="" disabled>No slots available on this date</option>';
+                    return;
+                }
+
+                data.available_slots.forEach(slot => {
+                    const option = document.createElement('option');
+                    option.value = slot;
+                    option.textContent = formatTimeLabel(slot);
+                    timeSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading available slots:', error);
+                timeSelect.innerHTML = '<option value="" disabled>Unable to load slots</option>';
+            }
+        }
+
+        function formatTimeLabel(timeValue) {
+            const [hours, minutes] = timeValue.split(':');
+            const h = parseInt(hours, 10);
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            const hour12 = h % 12 || 12;
+            return `${hour12}:${minutes} ${ampm}`;
+        }
+
+        async function submitBooking(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const date = document.getElementById('bookingDate').value;
+            const time = document.getElementById('bookingTime').value;
+            const concern = document.getElementById('concern').value.trim();
+            
+            if (!date || !time) {
+                showAlert('Missing Information', 'Please select a date and time');
+                return;
+            }
+            
+            // Availability is validated on the server
+            
+            try {
+                const response = await fetch('api/create-booking.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        phone,
+                        date,
+                        time,
+                        message: concern
+                    })
+                });
+
+                const data = await response.json();
+                if (!response.ok || !data.success) {
+                    throw new Error(data.message || 'Failed to create booking');
+                }
+
+                showAlert('Booking Confirmed', `Thank you for booking!\n\nSession Confirmation:\nName: ${name}\nEmail: ${email}\nDate: ${date}\nTime: ${time}\n\nA confirmation email will be sent shortly.`, () => {
+                    closeBookingForm();
+                    document.querySelector('form').reset();
+                });
+            } catch (error) {
+                console.error('Booking error:', error);
+                showAlert('Booking Failed', error.message || 'Failed to create booking. Please try again.');
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('bookingModal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeBookingForm();
+            }
+        });
+
+        // Themed Modal System (matching counselling theme)
+        function showAlert(title, message, callback) {
+            const modal = document.createElement('div');
+            modal.className = 'themed-alert-modal';
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 10000;';
+            
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, #E8F1F0 0%, #F0F5F4 100%); padding: 35px; border-radius: 15px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); border: 3px solid #7A9B8E;">
+                    <h2 style="color: #7A9B8E; margin-bottom: 20px; font-size: 24px; font-family: 'Georgia', serif;">${title}</h2>
+                    <p style="color: #2C2C2C; margin-bottom: 25px; white-space: pre-line; line-height: 1.6; font-size: 15px;">${message}</p>
+                    <button onclick="this.closest('.themed-alert-modal').remove(); ${callback ? 'window.customAlertCallback && window.customAlertCallback()' : ''}" 
+                            style="width: 100%; padding: 12px; background: linear-gradient(135deg, #7A9B8E 0%, #8BA994 100%); color: #F8F6F3; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-family: 'Georgia', serif;">
+                        OK
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            if (callback) window.customAlertCallback = callback;
+        }
+
+        function showConfirm(title, message, callback) {
+            const modal = document.createElement('div');
+            modal.className = 'themed-confirm-modal';
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 10000;';
+            
+            modal.innerHTML = `
+                <div style="background: linear-gradient(135deg, #E8F1F0 0%, #F0F5F4 100%); padding: 35px; border-radius: 15px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); border: 3px solid #7A9B8E;">
+                    <h2 style="color: #7A9B8E; margin-bottom: 20px; font-size: 24px; font-family: 'Georgia', serif;">${title}</h2>
+                    <p style="color: #2C2C2C; margin-bottom: 25px; line-height: 1.6; font-size: 15px;">${message}</p>
+                    <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                        <button onclick="this.closest('.themed-confirm-modal').remove(); window.customConfirmCallback && window.customConfirmCallback(false)" 
+                                style="padding: 10px 20px; background: #CCCCCC; color: #2C2C2C; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-family: 'Georgia', serif;">
+                            Cancel
+                        </button>
+                        <button onclick="this.closest('.themed-confirm-modal').remove(); window.customConfirmCallback && window.customConfirmCallback(true)" 
+                                style="padding: 10px 20px; background: linear-gradient(135deg, #7A9B8E 0%, #8BA994 100%); color: #F8F6F3; border: none; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s; font-family: 'Georgia', serif;">
+                            Confirm
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            window.customConfirmCallback = callback;
+        }
+    </script>
+
+    <footer>
+        <p>&copy; <span id="year"></span> Reader's Haven. All rights reserved. | Counselling & Books</p>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

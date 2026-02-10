@@ -1,0 +1,10 @@
+[22-Jan-2026 16:56:36 Europe/Berlin] PHP Warning:  require_once(C:\Users\IOT PROJECT\htdocs\seee\api/../includes/send-email.php): Failed to open stream: No such file or directory in C:\Users\IOT PROJECT\htdocs\seee\api\send-order-email.php on line 20
+[22-Jan-2026 16:56:36 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\Users\IOT PROJECT\htdocs\seee\api/../includes/send-email.php' (include_path='C:\Users\IOT PROJECT\php\PEAR') in C:\Users\IOT PROJECT\htdocs\seee\api\send-order-email.php:20
+Stack trace:
+#0 {main}
+  thrown in C:\Users\IOT PROJECT\htdocs\seee\api\send-order-email.php on line 20
+[23-Jan-2026 22:08:19 Europe/Berlin] PHP Warning:  require_once(C:\Users\IOT PROJECT\htdocs\seee\api/../includes/send-email.php): Failed to open stream: No such file or directory in C:\Users\IOT PROJECT\htdocs\seee\api\send-order-email.php on line 20
+[23-Jan-2026 22:08:19 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\Users\IOT PROJECT\htdocs\seee\api/../includes/send-email.php' (include_path='C:\Users\IOT PROJECT\php\PEAR') in C:\Users\IOT PROJECT\htdocs\seee\api\send-order-email.php:20
+Stack trace:
+#0 {main}
+  thrown in C:\Users\IOT PROJECT\htdocs\seee\api\send-order-email.php on line 20
