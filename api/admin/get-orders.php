@@ -29,14 +29,14 @@ try {
     
     if ($status) {
         $query = "SELECT o.id, o.order_number, o.customer_name, o.customer_email, o.total_amount, 
-                 o.status, o.created_at, o.notes, o.shipping_address, o.delivery_cost, o.payment_method
+                 o.status, o.created_at, o.notes, o.shipping_address, o.delivery_cost, o.payment_method, o.payment_status
                   FROM orders o
                   WHERE o.status = ?
                   ORDER BY o.created_at DESC";
         $orders = getRows($query, [$status]);
     } else {
         $query = "SELECT o.id, o.order_number, o.customer_name, o.customer_email, o.total_amount, 
-                 o.status, o.created_at, o.notes, o.shipping_address, o.delivery_cost, o.payment_method
+                 o.status, o.created_at, o.notes, o.shipping_address, o.delivery_cost, o.payment_method, o.payment_status
                   FROM orders o
                   ORDER BY o.created_at DESC";
         $orders = getRows($query);

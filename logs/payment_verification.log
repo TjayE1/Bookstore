@@ -1,0 +1,4 @@
+{"timestamp":"2026-02-11 23:20:19","event":"INFO","ip":"127.0.0.1","user":"GUEST","details":"Payment verified for order #ORD-20260211231954-717d66 by admin"}
+{"timestamp":"2026-02-12 18:08:53","event":"INFO","ip":"127.0.0.1","user":"GUEST","details":"Payment verified for order #ORD-20260210224914-1f91fe by admin"}
+{"timestamp":"2026-02-12 18:08:56","event":"ERROR","ip":"127.0.0.1","user":"GUEST","details":"Payment verification failed"}
+{"timestamp":"2026-02-12 18:09:00","event":"ERROR","ip":"127.0.0.1","user":"GUEST","details":"Payment verification failed"}

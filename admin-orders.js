@@ -24,6 +24,7 @@ function initializeAdmin() {
         if (unauthorizedContent) unauthorizedContent.style.display = 'none';
         fetchAndRenderOrders();
         renderInventory();
+        runPaymentReminders();
     } else {
         console.log('❌ Not admin - showing access denied');
         if (adminContent) adminContent.style.display = 'none';
@@ -141,6 +142,41 @@ async function fetchAndRenderOrders() {
         }
     } catch (error) {
         console.error('Error fetching orders:', error);
+    }
+}
+
+async function runPaymentReminders() {
+    try {
+        const throttleMinutes = 10;
+        const lastRunKey = 'paymentReminderLastRun';
+        const lastRun = parseInt(localStorage.getItem(lastRunKey), 10) || 0;
+        const now = Date.now();
+        if (now - lastRun < throttleMinutes * 60 * 1000) {
+            return;
+        }
+
+        localStorage.setItem(lastRunKey, String(now));
+
+        const response = await fetch('api/admin/send-payment-reminders.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + (localStorage.getItem('authToken') || '')
+            },
+            body: JSON.stringify({ source: 'admin-dashboard' })
+        });
+
+        if (!response.ok) {
+            console.warn('Payment reminder check failed:', response.status);
+            return;
+        }
+
+        const data = await response.json();
+        if (data.success && data.sent > 0) {
+            console.log(`Payment reminders sent: ${data.sent}`);
+        }
+    } catch (error) {
+        console.warn('Payment reminder check error:', error);
     }
 }
 
@@ -723,7 +759,7 @@ function openOrderDetails(orderNumber, orderId) {
     let deliveryInfo = {};
     try {
         if (order.notes) {
-            deliveryInfo = JSON.parse(order.notes);
+            deliveryInfo = typeof order.notes === 'string' ? JSON.parse(order.notes) : order.notes;
         }
     } catch (e) {
         deliveryInfo = { rawNotes: order.notes };
